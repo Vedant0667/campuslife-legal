@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Join your family on CampusLife</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#120c08; --surface:#1d1511; --surface-2:#291f1b;
+    --border:#3e332d; --border-soft:#2d2420;
+    --ink:#f1e9e3; --body:#d3c8bf; --muted:#92877f;
+    --accent:#e38a66; --accent-strong:#e27551; --on-accent:#190f0b;
+    color-scheme: dark;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    font-family:'Karla',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    max-width:520px; margin:0 auto; padding:52px 22px 88px;
+    line-height:1.7; color:var(--body); background:var(--bg);
+    -webkit-font-smoothing:antialiased; text-align:center;
+  }
+  .site-head{ display:flex; align-items:center; justify-content:center; gap:9px; margin-bottom:34px; }
+  .site-head svg{ color:var(--accent); display:block; }
+  .site-head span{ font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:1.06rem; color:var(--ink); }
+  h1{ font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:1.9rem; line-height:1.15; letter-spacing:-0.02em; color:var(--ink); margin:0 0 10px; }
+  p{ margin:12px 0; }
+  .code-card{ margin:26px 0 8px; background:var(--surface); border:1px solid var(--border-soft); border-radius:16px; padding:22px; }
+  .code-label{ font-size:0.82rem; color:var(--muted); margin:0; }
+  #code{ font-family:'Fraunces',Georgia,serif; font-weight:700; font-size:2.6rem; letter-spacing:0.35em; color:var(--accent); margin:6px 0 0; padding-left:0.35em; }
+  .btn{ display:block; margin:22px auto 0; max-width:340px; background:var(--accent-strong); color:var(--on-accent); font-weight:700; font-size:1.05rem; text-decoration:none; border-radius:14px; padding:15px 22px; }
+  .steps{ text-align:left; margin:30px auto 0; max-width:400px; background:var(--surface); border:1px solid var(--border-soft); border-radius:14px; padding:18px 22px; }
+  .steps p{ margin:8px 0; }
+  .muted{ color:var(--muted); font-size:0.9rem; }
+  a{ color:var(--accent); }
+</style>
+</head>
+<body>
+  <div class="site-head">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+    <span>CampusLife</span>
+  </div>
+
+  <h1>You're invited</h1>
+  <p>A parent invited you to join their family on CampusLife, a short daily check-in between you and them.</p>
+
+  <div class="code-card">
+    <p class="code-label">Your family invite code</p>
+    <p id="code">······</p>
+  </div>
+  <p class="muted">The code is all you need — it works even if the button below doesn't.</p>
+
+  <a id="open-app" class="btn" href="#">Open in the CampusLife app</a>
+
+  <div class="steps">
+    <p><strong>Don't have the app yet?</strong></p>
+    <p>1. Install CampusLife from the App Store or Google Play.</p>
+    <p>2. Open it and choose <strong>I'm a student</strong>.</p>
+    <p>3. Enter the invite code above when you sign up.</p>
+  </div>
+
+  <p class="muted" style="margin-top:34px;">Questions? <a href="mailto:campuslifefeedback@gmail.com">campuslifefeedback@gmail.com</a></p>
+
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var raw = (params.get('code') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+      var codeEl = document.getElementById('code');
+      var btn = document.getElementById('open-app');
+      if (raw) {
+        codeEl.textContent = raw;
+        var appUrl = 'campuslife://join?code=' + encodeURIComponent(raw);
+        btn.setAttribute('href', appUrl);
+        // Best effort: if the app is installed, hop straight into it.
+        setTimeout(function () { window.location.href = appUrl; }, 600);
+      } else {
+        codeEl.textContent = '——';
+        btn.style.display = 'none';
+      }
+    })();
+  </script>
+</body>
+</html>
